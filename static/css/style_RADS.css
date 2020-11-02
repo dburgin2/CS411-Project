@@ -1,0 +1,161 @@
+body {
+  background-color: white;
+  font-family: 'Raleway', sans-serif;
+}
+
+title {
+  font-size: 1000px;
+}
+
+
+
+#banner {
+  background-image: url("https://wallpapercave.com/wp/wp2446265.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+  width: 100%;
+}
+
+#banner .content h1 {
+  border: 3px solid slategrey;
+  background-color: slategrey;
+  border-radius: 15px;
+  color: white;
+  position: relative;
+  background-position: center;
+  top: 50px;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+#main {
+  margin: 0 auto;
+  padding: 40px;
+  text-align: center;
+  width: 400px;
+  height: 1000px;
+  overflow: scroll;
+}
+
+h1 {
+  color: white;
+  font-size: 42px;
+  font-weight: 600;
+  text-align: center;
+}
+
+h2 {
+  border: 1px dotted red;
+  color: red;
+  font-size: 14px;
+  line-height: 48px;
+  padding: 20px 30px;
+  margin: 30px 20px;
+  text-align: center;
+}
+
+h3 {
+  color: red;
+  font-size: 26px;
+  font-weight: 700;
+  padding: 20px 10px;
+}
+
+p {
+  color: grey;
+  font-size: 16px;
+  line-height: 48px;
+  margin-top: 60px;
+  padding: 10px 20px;
+}
+
+.column {
+  float: left;
+  padding: 10px;
+}
+.column.side {
+  width: 25%;
+}
+
+.column.middle{
+  width: 75%;
+}
+
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: darkcyan;
+  color: white;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+  width: 1;
+}
+
+.pull-quote {
+  margin: 0 auto;
+  width: 400px;
+}
+
+.byline {
+  border-bottom: 1px solid LightGrey;
+  border-top: 1px solid LightGrey;
+  color: DarkGrey;
+  font-size: 14px;
+  font-weight: 200;
+}
+
+.share {
+  border: 1px solid LightGrey;
+  padding: 40px 0px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.share a {
+  background: #ff0000;
+  border: 1px solid red;
+  border-radius: 3px;
+  color: white;
+  display: inline-block;
+  margin: 10px;
+  padding: 14px;
+  text-decoration: none;
+}
+
+.share a:hover {
+  background: white;
+  border: 1px solid red;
+  color: red;
+}
+
+.menu {
+ background: aliceblue;
+  border: bisque;
+  border-radius: 3px;
+  color: darkcyan;
+  margin: 10px;
+  padding: 14px;
+  text-decoration: none;
+}

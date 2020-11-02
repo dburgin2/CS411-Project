@@ -1,0 +1,11 @@
+div {
+    display: inline-block;
+    width: 50%;
+    background-size: cover;
+}
+
+h1 {
+    background-color: antiquewhite;
+    text-align: center;
+    padding: 200px;
+}
