@@ -3,84 +3,74 @@
 <head>
   <title>RADS - CS411 Final Project</title>
   <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Raleway:100,200,600,700" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="../static/css/style_RADS.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/style_RADS.css?version=52">
+  <script type="text/javascript" src="../static/js/animation.js"></script>
 </head>
-<body>
+    <body>
 
-  <div id="banner">
-    <div class="content">
-      <h1>Educational Finances to Inform Investment</h1>
-    </div>
-  </div>
+      <div id="banner">
+        <div class="content">
+          <h1>Educational Finances to Inform Investment</h1>
+        </div>
+      </div>
 
-
-    <div class="row">
-     <div class="column side">
-
-         <div class="menu">
-            <label for="company">Choose a company:</label>
-
-            <select name="compnay" id="compnay">
-                <option value="google">Google</option>
-                <option value="apple">Apple</option>
-                <option value="ADAMS RESOURCES & ENERGY, INC.">ADAMS RESOURCES & ENERGY, INC.</option>
-                <option value="ADVANCED MICRO DEVICES INC">Audi</option>
-            </select>
+     <!-- Four buttons in a group -->
+        <div class="topnav btn-group" style="width:100%">
+          <button style="width:15%">Home</button>
+          <button style="width:15%">Insert Record</button>
+          <button style="width:15%">Update Record</button>
+          <button style="width:15%">Delete Record</button>
+          <button style="width:15%">Search Database</button>
         </div>
 
-          <div class="menu">
-            <label for="company">Choose a company:</label>
-                <select name="compnay" id="compnay">
-                    <option value="google">Google</option>
-                    <option value="apple">Apple</option>
-                    <option value="ADAMS RESOURCES & ENERGY, INC.">ADAMS RESOURCES & ENERGY, INC.</option>
-                    <option value="ADVANCED MICRO DEVICES INC">Audi</option>
-                </select>
+
+      <div>
+        <!-- Use a button to open the snackbar -->
+        <button onclick="snackbar_animate()">Show Snackbar</button>
+
+        <!-- The actual snackbar -->
+        <div id="snackbar">Some text some message..</div>
+
+{#        <div class="row">#}
+{#         <div class="column side"#}
+
+            <form method="POST">
+                Search for company records by ticker:<br>
+                <input type="text" name="tag"><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+
+        <div class="column middle">
+            <h2>{{ company }}</h2>
+              <table id="customers">
+                  <tr>
+                      <th>Company</th>
+                      <th>Date</th>
+                      <th>Open</th>
+                      <th>High</th>
+                      <th>Low</th>
+                      <th>Close</th>
+                      <th>Adj Close</th>
+                      <th>Volume</th>
+                  </tr>
+                  <tr>
+                      <td>{{ company }}</td>
+                      <td>{{ date }}</td>
+                      <td>{{ records[0] }}</td>
+                      <td>{{ records[1] }}</td>
+                      <td>{{ records[2] }}</td>
+                      <td>{{ records[3] }}</td>
+                      <td>{{ records[4] }}</td>
+                      <td>{{ records[5] }}</td>
+                  </tr>
+
+                </table>
             </div>
-         </div>
-    <div class="column middle">
-          <table id="customers">
-              <tr>
-                <th>Company</th>
-                <th>Contact</th>
-                <th>Country</th>
-              </tr>
-              <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-              </tr>
-              <tr>
-                <td>Berglunds snabbköp</td>
-                <td>Christina Berglund</td>
-                <td>Sweden</td>
-              </tr>
-              <tr>
-                <td>Centro comercial Moctezuma</td>
-                <td>Francisco Chang</td>
-                <td>Mexico</td>
-              </tr>
-              <tr>
-                <td>Ernst Handel</td>
-                <td>Roland Mendel</td>
-                <td>Austria</td>
-              </tr>
-              <tr>
-                <td>Island Trading</td>
-                <td>Helen Bennett</td>
-                <td>UK</td>
-              </tr>
-              <tr>
-                <td>Königlich Essen</td>
-                <td>Philip Cramer</td>
-                <td>Germany</td>
-              </tr>
-
-            </table>
-        </div>
-    </div>
+{#        </div>#}
 
 
 
-</body>
+    </body>
 </html>
