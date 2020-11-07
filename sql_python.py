@@ -15,6 +15,20 @@ def fin_search(ticker):
       return_arr.append(x)
    return return_arr
 
+def symbol_search(ticker):
+   db = mysql.connector.connect(
+      host="localhost",
+      user="root",
+      passwd="CS411RADS",
+      database="Financial_Database"
+   )
+   mycursor = db.cursor()
+   query = '''SELECT * FROM Symbols WHERE Symbol = "''' + ticker + '''" LIMIT 1;'''
+   mycursor.execute(query)
+   return_arr = []
+   for x in mycursor:
+      return_arr.append(x)
+   return return_arr
 
 #This function inserts a new Symbol and Security_Name into the Symbol table.
 def insert_security(ticker, security_name):

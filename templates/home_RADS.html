@@ -55,15 +55,16 @@
 
         <div id="Insert" class="tabcontent">
          <form method="POST">
-                Search for company records by ticker:<br>
-                <input type="text" name="tag" placeholder="Search..."><br>
+               Insert ticker and security name<br>
+                <input type="text" name="insert_tick" placeholder="Ticker..."><br>
+                <input type="text" name="insert_secu" placeholder="Security name..."><br>
                 <input type="submit" name="btn" value="SI">
             </form>
         </div>
 
         <div id="Update" class="tabcontent">
             <form method="POST">
-          Search for company records by ticker:<br>
+          Update a company ticker:<br>
             <input type="text" name="ntick" placeholder="New ticker..."><br>
             <input type="text" name="otick" placeholder="Old ticker..."><br>
             <input type="submit" name="btn" value="SU">
@@ -72,14 +73,14 @@
 
         <div id="Delete" class="tabcontent">
             <form method="POST">
-          Search for company records by ticker:<br>
-                <input type="text" name="tag" placeholder="Search..."><br>
+          Remove company records by ticker:<br>
+                <input type="text" name="del" placeholder="Search..."><br>
                 <input type="submit" name="btn" value="SD">
             </form>
         </div>
       <div>
-        <!-- Use a button to open the snackbar -->
-        <button onclick="snackbar_animate()">Show Snackbar</button>
+{#        <!-- Use a button to open the snackbar -->#}
+{#        <button onclick="snackbar_animate()">Show Snackbar</button>#}
 
         <!-- The actual snackbar -->
         <div id="snackbar">Some text some message..</div>
