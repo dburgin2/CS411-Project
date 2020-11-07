@@ -8,41 +8,25 @@
 </head>
     <body>
 
+        {# Banner over the page #}
       <div id="banner">
         <div class="content">
           <h1>Educational Finances to Inform Investment</h1>
         </div>
       </div>
 
-     <!-- Four buttons in a group -->
-        <div class="topnav btn-group" style="width:100%">
-          <button style="width:15%">Home</button>
-          <button style="width:15%">Insert Record</button>
-          <button style="width:15%">Update Record</button>
-          <button style="width:15%">Delete Record</button>
-          <button style="width:15%">Search Database</button>
-        </div>
+        <button class="tablink" onclick="openPage('Home', this, '#878787')" id="defaultOpen">Home</button>
+        <button class="tablink" onclick="openPage('Insert', this, '#878787')">Insert</button>
+        <button class="tablink" onclick="openPage('Update', this,'#878787')">Update</button>
+        <button class="tablink" onclick="openPage('Delete', this, '#878787')">Delete</button>
 
-
-      <div>
-        <!-- Use a button to open the snackbar -->
-        <button onclick="snackbar_animate()">Show Snackbar</button>
-
-        <!-- The actual snackbar -->
-        <div id="snackbar">Some text some message..</div>
-
-{#        <div class="row">#}
-{#         <div class="column side"#}
-
+        <div id="Home" class="column middle tabcontent">
             <form method="POST">
                 Search for company records by ticker:<br>
-                <input type="text" name="tag"><br>
-                <input type="submit" value="Submit">
+                <input type="text" name="tag" placeholder="Search..."><br>
+                <input type="submit" name="btn" value="SH">
             </form>
-        </div>
 
-
-        <div class="column middle">
             <h2>{{ company }}</h2>
               <table id="customers">
                   <tr>
@@ -68,9 +52,39 @@
 
                 </table>
             </div>
-{#        </div>#}
 
+        <div id="Insert" class="tabcontent">
+         <form method="POST">
+                Search for company records by ticker:<br>
+                <input type="text" name="tag" placeholder="Search..."><br>
+                <input type="submit" name="btn" value="SI">
+            </form>
+        </div>
 
+        <div id="Update" class="tabcontent">
+            <form method="POST">
+          Search for company records by ticker:<br>
+            <input type="text" name="ntick" placeholder="New ticker..."><br>
+            <input type="text" name="otick" placeholder="Old ticker..."><br>
+            <input type="submit" name="btn" value="SU">
+            </form>
+        </div>
+
+        <div id="Delete" class="tabcontent">
+            <form method="POST">
+          Search for company records by ticker:<br>
+                <input type="text" name="tag" placeholder="Search..."><br>
+                <input type="submit" name="btn" value="SD">
+            </form>
+        </div>
+      <div>
+        <!-- Use a button to open the snackbar -->
+        <button onclick="snackbar_animate()">Show Snackbar</button>
+
+        <!-- The actual snackbar -->
+        <div id="snackbar">Some text some message..</div>
+
+        </div>
 
     </body>
 </html>

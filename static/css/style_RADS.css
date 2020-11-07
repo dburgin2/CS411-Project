@@ -1,13 +1,12 @@
 body {
   background-color: #DEEAEA;
   font-family: 'Raleway', sans-serif;
+  /*height: 100%;*/
 }
 
 title {
   font-size: 1000px;
 }
-
-
 
 #banner {
   background-image: url("https://wallpapercave.com/wp/wp2446265.jpg");
@@ -74,7 +73,7 @@ p {
 
 .column {
   margin: auto;
-  border: 3px solid lightcyan;
+  /*border: 3px solid lightcyan;*/
   float: center;
   padding: 10px;
   width: 50%;
@@ -292,30 +291,39 @@ p {
   .sidenav a {font-size: 18px;}
 }
 
-.btn-group button {
-  background-color: #333333; /* Green background */
-  border: 1px solid #333333; /* Green border */
-  color: white; /* White text */
-  padding: 10px 24px; /* Some padding */
-  cursor: pointer; /* Pointer/hand icon */
-  float: left; /* Float the buttons side by side */
-  font-family: 'Raleway', sans-serif;
-}
-
-.btn-group button:not(:last-child) {
-  border: none; /* Prevent double borders */
-  /*border-left: none;*/
-  /*border-right:none;*/
-}
-
-/* Clear floats (clearfix hack) */
-.btn-group:after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
 /* Add a background color on hover */
 .btn-group button:hover {
   background-color: slategrey;
 }
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: Black;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+/*#Home {background-color: slategrey;}*/
+/*#News {background-color: slategrey;}*/
+/*#Contact {background-color: slategrey;}*/
+/*#About {background-color: slategrey;}*/
+
+
