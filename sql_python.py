@@ -13,7 +13,9 @@ def fin_search(ticker):
    return_arr = []
    for x in mycursor:
       return_arr.append(x)
-   return return_arr
+   if len(return_arr) == 0:
+      return False, return_arr
+   return True, return_arr
 
 def symbol_search(ticker):
    db = mysql.connector.connect(
@@ -99,11 +101,11 @@ def get_security_name(ticker):
 		mycursor.execute(query, param)
 		row = mycursor.fetchone()
 		if row == None:
-			return False
+			return False, None
 		else:
 			return True, row[0]
 	else:
-		return False
+		return False, None
 
 #This function can update a Symbol in the Symbols table only - it changes a Symbol corresponding with old_ticker to new_ticker
 def update_ticker(new_ticker, old_ticker):

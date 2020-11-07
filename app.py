@@ -10,31 +10,6 @@ app = Flask(__name__)
 def home():
     return render_template("home_RADS.html", records=None)
 
-# @app.route('/')
-# def insert():
-#     # if request.method == 'POST':
-#     #     # Then get the data from the form
-#     #     company = request.form['iSecurity',
-#     #                            'iDate',
-#     #                            'iOpen',
-#     #                            'iHigh',
-#     #                            'iLow',
-#     #                            'iClose',
-#     #                            'iAdj_close',
-#     #                            'iVol']
-#     #
-#     #     # Get the username/password associated with this tag
-#     #     records = sql_py.fin_search(company)
-#     #     assert company == records[0][0]
-#     #     records = records[0][1:]
-#     #     date = records[0]
-#     #     records = [round(x, 3) for x in records[1:]]
-#     #     return render_template("home_RADS.html", company=company, date=date, records=records)
-#     #
-#     #     # Otherwise this was a normal GET request
-#     # else:
-#     #     return render_template('home_RADS.html')
-#     pass
 
 @app.route('/', methods=['GET', 'POST'])
 def get_forms():
@@ -78,21 +53,26 @@ def search(ticker):
     # Get the username/password associated with this tag
     if ticker == None:
         return render_template('home_RADS.html', records=None)
-    records = sql_py.fin_search(ticker)
+    success_stocks, records = sql_py.fin_search(ticker)
+    success_sn, security_name = sql_py.get_security_name(ticker)
     # assert ticker == records
+    if success_stocks == False and success_sn == True:
+        return render_template("home_RADS.html", company=security_name, ticker=ticker, date=None, records=None)
+    elif success_sn == False:
+        return render_template("home_RADS.html", company=None, ticker=ticker, date=None, records=None)
+    elif success_stocks == False:
+        return render_template("home_RADS.html", company=None, ticker=ticker, date=None, records=None)
+
+    print("here")
     records = records[0][1:]
     date = records[0]
     records = [round(x,3) for x in records[1:]]
-    return render_template("home_RADS.html", company=ticker, date=date, records=records)
+    return render_template("home_RADS.html", company=security_name, ticker=ticker, date=date, records=records)
 
 
 def update(new_ticker, old_ticker):
     sql_py.update_ticker(new_ticker, old_ticker)
     return render_template("home_RADS.html", records=None)
-#
-# @app.route("/")
-# def delete():
-#     pass
 
 def snackbarpopup():
     # find the snackbar DIV
