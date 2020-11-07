@@ -25,8 +25,9 @@ def get_forms():
         elif data["btn"] == "SU":
             print("SU")
             new_ticker = data["ntick"]
+            new_secure = data["nsecu"]
             old_ticker = data["otick"]
-            return update(new_ticker, old_ticker)
+            return update(new_ticker, new_secure, old_ticker)
         elif data["btn"] == "SD":
             print("SD")
             return delete(data)
@@ -70,8 +71,19 @@ def search(ticker):
     return render_template("home_RADS.html", company=security_name, ticker=ticker, date=date, records=records)
 
 
-def update(new_ticker, old_ticker):
-    sql_py.update_ticker(new_ticker, old_ticker)
+def update(new_ticker, new_secure, old_ticker):
+    print(new_secure,new_ticker)
+    if new_secure == '':
+        print("no secure")
+        sql_py.update_ticker(new_ticker, old_ticker)
+    elif new_ticker == '':
+        print("no new ticker")
+        sql_py.update_security_name(old_ticker, new_secure)
+    else:
+        print("all of them")
+        sql_py.update_ticker(new_ticker, old_ticker)
+        sql_py.update_security_name(new_ticker, new_secure)
+
     return render_template("home_RADS.html", records=None)
 
 def snackbarpopup():
