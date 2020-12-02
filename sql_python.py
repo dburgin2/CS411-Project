@@ -1,4 +1,6 @@
 import mysql.connector
+from pymongo import MongoClient
+import csv
 
 def fin_search(ticker):
    db = mysql.connector.connect(
@@ -57,6 +59,7 @@ def insert_security(ticker, security_name):
 	else:
 		print("Process failed. Not a valid symbol.")
 		return False
+
 def insert_stocks(symbol, date, open, high, low, close, adj_close, volume):
    db = mysql.connector.connect(
          host="localhost",
@@ -65,12 +68,15 @@ def insert_stocks(symbol, date, open, high, low, close, adj_close, volume):
          database="Financial_Database"
       )
    mycursor = db.cursor()
+   print("before insert")
    query = "INSERT INTO Stocks (Symbol, Date_Recorded, Open, High, Low, Close, Adj_Close, Volume) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
    val = (symbol, date, open, high, low, close, adj_close, volume)
-   print(query)
-   print(val)
+   print("here", query)
+   print("val",val)
    mycursor.execute(query, val)
+   print("after execution")
    db.commit()
+   return
 
 #This function deletes a ticker (a Symbol from the Symbols table) completely. This will cascade to Stocks, so all the company records in Stocks will be deleted.
 def delete_security(ticker):
@@ -244,3 +250,67 @@ def GetGOOGLPrediction(input_date):
    if len(return_arr[0]) == 0:
       return False
    return list(return_arr[0][0])
+
+
+def get_recent_tweets():
+    mongo_client = MongoClient()
+
+    # CHANGE NAME OF DATABASE IF NOT CORRECT OR NOT WHAT YOU WANT IT TO BE CALLED
+    db = mongo_client["sentiment_tweets_db"]
+    coll = db["sentiment_tweets_coll"]
+
+    active_stocks = get_active_stocks()
+    stocks_dict = {}
+    tweets_list = []
+    temp_list = []
+    for i in range(len(active_stocks)):
+        selection = {"ticker" : active_stocks[i]}
+        projection = {"tweet" : 1, "sentiment" : 1, "date" : 1, "_id" : 0}
+        cursor = coll.find(selection,projection).limit(5)
+        for doc in cursor:
+            temp_list.append(doc["tweet"])
+            temp_list.append(doc["sentiment"])
+            temp_list.append(doc["date"])
+            tweets_list.append(temp_list)
+            temp_list.clear()
+        stocks_dict[active_stocks[i]] = tweets_list
+        tweets_list.clear()
+
+
+def get_active_stocks():
+    active_stocks = []
+    with open('Active_Stocks_1.csv') as f:
+        f.readline()
+        reader = csv.reader(f, delimiter=",")
+        for i in reader:
+            active_stocks.append(i[0])
+    f.close()
+    with open('Active_Stocks_2.csv') as f:
+        f.readline()
+        reader = csv.reader(f, delimiter = ',')
+        for i in reader:
+            active_stocks.append(i[0])
+    return active_stocks
+
+def get_recent_tweets():
+    mongo_client = MongoClient()
+    db = mongo_client["sentiment_tweets_db"]
+    coll = db["sentiment_tweets_coll"]
+    active_stocks = get_active_stocks()
+    stocks_dict = {}
+    tweets_list = []
+    temp_list = []
+    for i in range(len(active_stocks)):
+        selection = {"ticker" : active_stocks[i]}
+        projection = {"tweet" : 1, "sentiment" : 1, "date" : 1, "_id" : 0}
+        cursor = coll.find(selection,projection).limit(5)
+        for doc in cursor:
+            temp_list.append(doc["tweet"])
+            temp_list.append(doc["sentiment"])
+            temp_list.append(doc["date"])
+            tweets_list.append(temp_list)
+            temp_list = []
+        stocks_dict[active_stocks[i]] = tweets_list
+        tweets_list = []
+    return stocks_dict
+

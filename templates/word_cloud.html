@@ -18,11 +18,10 @@
       </div>
 
         <button class="tablink" onclick="openPage('Home', this, '#878787')" id="defaultOpen">Home</button>
-        <button class="tablink" onclick="openPage('Prediction', this, '#878787')">Prediction</button>
+        <button class="tablink" onclick="openPage('Prediction', this, '#878787')">Sentiment</button>
         <button class="tablink" onclick="openPage('Stocks', this, '#878787')">Stocks for You</button>
-        <button class="tablink" onclick="openPage('Insert', this, '#878787')">Insert</button>
-        <button class="tablink" onclick="openPage('Update', this,'#878787')">Update</button>
-        <button class="tablink" onclick="openPage('Delete', this, '#878787')">Delete</button>
+        <button class="tablink" onclick="openPage('Data', this, '#878787')">Data</button>
+        <button class="tablink" onclick="openPage('CurrentStocks', this, '#878787')">Current Stocks</button>
 
 
 {#                          THE HOME TAB                        #}
@@ -69,11 +68,7 @@
                     <input type="submit" name="btn" value="Generate Word Cloud">
                 </form>
 
-                <form method="POST" id="form">
-              Find prediction for a certain date:<br>
-                    <input type="text" name="date" placeholder="yyyy-mm-dd..."><br>
-                    <input type="submit" name="btn" value="Predict the future">
-                </form>
+
 
             </div>
 
@@ -182,7 +177,122 @@
               </table>
 
 
-                    <table id="topten">
+
+                <table id="vol">
+                       <tr>
+                            <th colspan="2">Recent Tweets about {{ ticker }}</th>
+                        </tr>
+
+                        <tr>
+                            <td>{{ retweet[0][0] }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ retweet[1][0] }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ retweet[2][0] }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ retweet[3][0] }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ retweet[4][0] }}</td>
+                        </tr>
+
+
+
+                    </table>
+            </div>
+{#           <figure class="tab_container" id="activestocks">#}
+            <div class="tab_container">
+                <img src="static/wordcloud.png" alt="wordCloudRendered" style="width:100%">
+            </div>
+
+            <div class="tab_container">
+                <img src="static/tickerPie.png" alt="tickerPie" style="width:100%">
+            </div>
+
+
+{#               <img src={{ file_name }} alt="wordCloudRendered" style="width:100%">#}
+{#           </figure>#}
+        </div>
+        </div>
+
+        <div id="Stocks" class="tabcontent">
+            <form method="POST">
+          Find stocks within your price range, interests, and desired volatility:<br>
+                <input type="text" name="pr" placeholder="Input price..."><br>
+                <input type="text" name="se" placeholder="Sector..."><br>
+                <input type="text" name="vo" placeholder="Volatility..."><br>
+                <input type="submit" name="btn" value="Find matches">
+            </form>
+            <form method="POST" id="form">
+              Find prediction for a certain date:<br>
+                    <input type="text" name="date" placeholder="yyyy-mm-dd..."><br>
+                    <input type="submit" name="btn" value="Predict the future">
+            </form>
+            <table id="customers">
+                       <tr>
+                            <th colspan="2">Predicted Stock Price</th>
+                        </tr>
+                        <tr>
+                            <th>Date</th>
+                            <th>Stock Price</th>
+                        </tr>
+
+                        <tr>
+                            <td>{{ date }}</td>
+                           <td>{{ price }}</td>
+                        </tr>
+
+
+                    </table>
+            <div class="tab_container">
+                <img src="static/GoogleTimeAnalysis.png" alt="TimeAnalysis" style="width:100%">
+            </div>
+        </div>
+
+{#        The Insert tab        #}
+        <div id="Data" class="tabcontent">
+         <form method="POST">
+               Insert ticker and security name<br>
+                <input type="text" name="insert_tick" placeholder="Ticker..."><br>
+                <input type="text" name="insert_secu" placeholder="Security name..."><br>
+                <input type="submit" name="btn" value="SI">
+            </form>
+
+            <form method="POST">
+               Insert stocks<br>
+                <input type="text" name="in_symbol" placeholder="Ticker..."><br>
+                <input type="text" name="in_date" placeholder="Date recorded..."><br>
+                <input type="text" name="in_open" placeholder="Open..."><br>
+                <input type="text" name="in_high" placeholder="High..."><br>
+                <input type="text" name="in_low" placeholder="Low..."><br>
+                <input type="text" name="in_close" placeholder="Close..."><br>
+                <input type="text" name="in_adj_close" placeholder="Adj_Close..."><br>
+                <input type="text" name="in_vol" placeholder="Volume..."><br>
+                <input type="submit" name="btn" value="Insert Stocks">
+            </form>
+
+
+            <form method="POST">
+          Update a company ticker:<br>
+            <input type="text" name="ntick" placeholder="New ticker..."><br>
+            <input type="text" name="nsecu" placeholder="New security name..."><br>
+            <input type="text" name="otick" placeholder="Old ticker..."><br>
+            <input type="submit" name="btn" value="SU">
+            </form>
+
+            <form method="POST">
+          Remove company records by ticker:<br>
+                <input type="text" name="del" placeholder="Search..."><br>
+                <input type="submit" name="btn" value="SD">
+            </form>
+        </div>
+
+
+        <div id="CurrentStocks" class="tabcontent">
+           <table id="topten">
                         <tr>
                             <th colspan="2">Top Ten Prices</th>
                         </tr>
@@ -232,7 +342,7 @@
                         </tr>
                     </table>
 
-                    <table id="vol">
+            <table id="vol">
                        <tr>
                             <th colspan="3">Max and Min Volumes of Stocks</th>
                         </tr>
@@ -269,92 +379,6 @@
                         </tr>
 
                     </table>
-
-                <table id="vol">
-                       <tr>
-                            <th colspan="2">Predicted Stock Price</th>
-                        </tr>
-                        <tr>
-                            <th>Date</th>
-                            <th>Stock Price</th>
-                        </tr>
-
-                        <tr>
-                            <td>{{ date }}</td>
-                           <td>{{ price }}</td>
-                        </tr>
-
-
-                    </table>
-            </div>
-{#           <figure class="tab_container" id="activestocks">#}
-            <div class="tab_container">
-                <img src="static/wordcloud.png" alt="wordCloudRendered" style="width:100%">
-            </div>
-
-            <div class="tab_container">
-                <img src="static/tickerPie.png" alt="tickerPie" style="width:100%">
-            </div>
-
-            <div class="tab_container">
-                <img src="static/googleTimeAnalysis.png" alt="TimeAnalysis" style="width:100%">
-            </div>
-{#               <img src={{ file_name }} alt="wordCloudRendered" style="width:100%">#}
-{#           </figure>#}
-        </div>
-        </div>
-
-        <div id="Stocks" class="tabcontent">
-            <form method="POST">
-          Find stocks within your price range, interests, and desired volatility:<br>
-                <input type="text" name="pr" placeholder="Input price..."><br>
-                <input type="text" name="se" placeholder="Sector..."><br>
-                <input type="text" name="vo" placeholder="Volatility..."><br>
-                <input type="submit" name="btn" value="Find matches">
-            </form>
-
-
-        </div>
-
-{#        The Insert tab        #}
-        <div id="Insert" class="tabcontent">
-         <form method="POST">
-               Insert ticker and security name<br>
-                <input type="text" name="insert_tick" placeholder="Ticker..."><br>
-                <input type="text" name="insert_secu" placeholder="Security name..."><br>
-                <input type="submit" name="btn" value="SI">
-            </form>
-
-            <form method="POST">
-               Insert stocks<br>
-                <input type="text" name="in_symbol" placeholder="Ticker..."><br>
-                <input type="text" name="in_date" placeholder="Date recorded..."><br>
-                <input type="text" name="in_open" placeholder="Open..."><br>
-                <input type="text" name="in_high" placeholder="High..."><br>
-                <input type="text" name="in_low" placeholder="Low..."><br>
-                <input type="text" name="in_close" placeholder="Close..."><br>
-                <input type="text" name="in_adj_close" placeholder="Adj_Close..."><br>
-                <input type="text" name="in_vol" placeholder="Volume..."><br>
-                <input type="submit" name="btn" value="Insert Stocks">
-            </form>
-        </div>
-
-        <div id="Update" class="tabcontent">
-            <form method="POST">
-          Update a company ticker:<br>
-            <input type="text" name="ntick" placeholder="New ticker..."><br>
-            <input type="text" name="nsecu" placeholder="New security name..."><br>
-            <input type="text" name="otick" placeholder="Old ticker..."><br>
-            <input type="submit" name="btn" value="SU">
-            </form>
-        </div>
-
-        <div id="Delete" class="tabcontent">
-            <form method="POST">
-          Remove company records by ticker:<br>
-                <input type="text" name="del" placeholder="Search..."><br>
-                <input type="submit" name="btn" value="SD">
-            </form>
         </div>
       <div>
 

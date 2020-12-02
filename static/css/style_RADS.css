@@ -117,14 +117,20 @@ caption {
   margin: auto;
 
 }
-
+#activestocks th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  /*text-align: left;*/
+  background-color: darkcyan;
+  color: white;
+}
 #activestocks td, #activestocks th {
   border: 1px solid #dddddd;
   padding: 8px;
 }
 
 #activestocks tr:nth-child(even){background-color: #f2f2f2;}
-
+#activestocks tr:nth-child(odd){background-color: #dddddd;}
 
 #topten {
  font-family: Arial, Helvetica, sans-serif;
@@ -136,14 +142,20 @@ caption {
   margin: auto;
 
 }
-
+#topten th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  /*text-align: left;*/
+  background-color: darkcyan;
+  color: white;
+}
 #topten td, #topten th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
 #topten tr:nth-child(even){background-color: #f2f2f2;}
-
+#topten tr:nth-child(odd){background-color: #dddddd;}
 
 #vol {
  font-family: Arial, Helvetica, sans-serif;
@@ -155,17 +167,26 @@ caption {
   margin: auto;
 
 }
-
+#vol th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  /*text-align: left;*/
+  background-color: darkcyan;
+  color: white;
+}
 #vol td, #vol th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
 #vol tr:nth-child(even){background-color: #f2f2f2;}
+#vol tr:nth-child(odd){background-color: #dddddd;}
 
 #form {
   width: 25%;
 }
+
+/* Main table organization */
 #customers {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -179,13 +200,13 @@ caption {
 }
 
 #customers tr:nth-child(even){background-color: #f2f2f2;}
-
+#customers tr:nth-child(odd){background-color: #dddddd;}
 #customers tr:hover {background-color: #ddd;}
 
 #customers th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  /*text-align: left;*/
   background-color: darkcyan;
   color: white;
 }

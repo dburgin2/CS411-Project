@@ -34,7 +34,7 @@ def get_forms():
         elif data['btn'] == "SI":
             print("SI")
             return insert(data)
-        elif data['btn'] == "Insert Stocks":
+        elif data['btn'] == "Insert Into Stocks":
             print("inserting into stocks...")
             return in_stock(data)
         elif data["btn"] == "Predict the future":
@@ -59,7 +59,21 @@ def get_forms():
     else:
         return render_template('home_RADS.html',
                                records=None,
-                               activeStock=sql_py.select_active_stocks())
+                               activeStock=sql_py.select_active_stocks(),
+                               suggest=[[[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]]],
+                               topten=sql_py.top_ten_price(),
+                               volstock=sql_py.second_complex_query(),
+                               volu=None
+                               )
 
 
 def gen_graphs(data):
@@ -69,6 +83,7 @@ def gen_graphs(data):
     # generate the pictures for the cloud
     ticker_cloud(ticker)
     tickerPie(ticker)
+    recent_tweet = sql_py.get_recent_tweets()
     file_name = "static/wordcloud_" + data["gen_word_cloud"] + ".png"
     print(sql_py.second_complex_query())
     return render_template("word_cloud.html",
@@ -76,17 +91,33 @@ def gen_graphs(data):
                            file=file_name,
                            activeStock= sql_py.select_active_stocks(),
                            topten=sql_py.top_ten_price(),
-                           volstock=sql_py.second_complex_query())
+                           volstock=sql_py.second_complex_query(),
+                           retweet=recent_tweet[ticker],
+                           ticker=ticker)
 
 def stock_match(data):
     price = data["pr"]
     sector = data["se"]
     vo = data["vo"]
     suggestions = sql_py.GetUserStocks(price, sector, vo)
+    voluu = []
     print(suggestions)
+    for i in suggestions:
+        print(type(i))
+        print(i[3])
+        voluu.append(i[3])
+        for j in i:
+            print(j)
+            # voluu.extend(j[3])
+    print(voluu)
     return render_template("home_RADS.html",
                            suggest=suggestions,
-                           records=None)
+                           volu=voluu,
+                           records=None,
+                           topten=sql_py.top_ten_price(),
+                           volstock=sql_py.second_complex_query(),
+                           activeStock=sql_py.select_active_stocks())
+
 def predict_stock(data):
     date = data["date"]
     tab = sql_py.GetGOOGLPrediction(date)
@@ -98,20 +129,48 @@ def predict_stock(data):
                            topten=sql_py.top_ten_price(),
                            volstock=sql_py.second_complex_query(),
                            date=date,
-                           price=tab[1])
+                           price=tab[1],
+                           retweet=sql_py.get_recent_tweets()["AAPL"])
 
 def delete(data):
     ticker = data["del"]
     sql_py.delete_security(ticker)
-    return render_template("home_RADS.html", records=None)
+    return render_template("home_RADS.html", records=None,suggest=[[[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]]],
+                           topten=sql_py.top_ten_price(),
+                           volstock=sql_py.second_complex_query(),
+                           activeStock=sql_py.select_active_stocks(),
+                           volu=None
+                           )
 
 def insert(data):
     ticker = data["insert_tick"]
     security_name = data["insert_secu"]
     success = sql_py.insert_security(ticker, security_name)
     return render_template("home_RADS.html",
-                           records=None
-                           )
+                           records=None,
+                           suggest=[[[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]]],
+                           volu=None,
+                           topten=sql_py.top_ten_price(),
+                           volstock=sql_py.second_complex_query(),
+                           activeStock=sql_py.select_active_stocks())
 
 def in_stock(data):
     ticker = data["in_symbol"]
@@ -123,13 +182,29 @@ def in_stock(data):
     adj_close = data["in_adj_close"]
     vol = data["in_vol"]
     sql_py.insert_stocks(ticker, date, open, high, low, close, adj_close, vol)
-    return render_template("home_RADS.html", records=None)
+    print("inserting...")
+    return render_template("home_RADS.html", records=None, suggest=[[[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]]],
+                           volu=None,
+                           topten=sql_py.top_ten_price(),
+                           volstock=sql_py.second_complex_query(),
+                           activeStock=sql_py.select_active_stocks()
+                           )
 
 def search(ticker):
     # Then get the data from the form
     # Get the username/password associated with this tag
     if ticker == None:
-        return render_template('home_RADS.html', records=None)
+        return render_template('home_RADS.html', records=None,topten=sql_py.top_ten_price(),
+                           volstock=sql_py.second_complex_query())
     success_stocks, records = sql_py.fin_search(ticker)
     success_sn, security_name = sql_py.get_security_name(ticker)
     # assert ticker == records
@@ -138,25 +213,87 @@ def search(ticker):
                                company=security_name,
                                ticker=ticker,
                                date=None,
-                               records=None)
+                               records=None,
+                               suggest=[[[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]]],
+                               volu=None,
+                               topten=sql_py.top_ten_price(),
+                               volstock=sql_py.second_complex_query(),
+                               activeStock=sql_py.select_active_stocks()
+                               )
     elif success_sn == False:
         return render_template("home_RADS.html",
                                company=None,
                                ticker=ticker,
                                date=None,
-                               records=None)
+                               records=None,
+                               suggest=[[[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]]],
+                               volu=None,
+                               topten=sql_py.top_ten_price(),
+                               volstock=sql_py.second_complex_query(),
+                               activeStock=sql_py.select_active_stocks()
+                               )
     elif success_stocks == False:
         return render_template("home_RADS.html",
                                company=None,
                                ticker=ticker,
                                date=None,
-                               records=None)
+                               records=None,
+                               suggest=[[[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]]],
+                               volu=None,
+                               topten=sql_py.top_ten_price(),
+                               volstock=sql_py.second_complex_query(),
+                               activeStock=sql_py.select_active_stocks()
+                               )
 
     print("here")
     records = records[0][1:]
     date = records[0]
     records = [round(x,3) for x in records[1:]]
-    return render_template("home_RADS.html", company=security_name, ticker=ticker, date=date, records=records)
+    return render_template("home_RADS.html",
+                           company=security_name,
+                           ticker=ticker,
+                           date=date,
+                           records=records,
+                           volu=None,
+                           suggest=[[[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]]],topten=sql_py.top_ten_price(),
+                           volstock=sql_py.second_complex_query(),
+                           activeStock=sql_py.select_active_stocks())
 
 
 def update(new_ticker, new_secure, old_ticker):
@@ -172,7 +309,21 @@ def update(new_ticker, new_secure, old_ticker):
         sql_py.update_ticker(new_ticker, old_ticker)
         sql_py.update_security_name(new_ticker, new_secure)
 
-    return render_template("home_RADS.html", records=None)
+    return render_template("home_RADS.html", records=None, suggest=[[[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]],
+                                        [[],[],[]]],
+                           volu=None,
+                           topten=sql_py.top_ten_price(),
+                           volstock=sql_py.second_complex_query(),
+                           activeStock=sql_py.select_active_stocks()
+                           )
 
 def snackbarpopup():
     # find the snackbar DIV
