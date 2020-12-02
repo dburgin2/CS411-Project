@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RADS - CS411 Final Project</title>
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Raleway:100,200,600,700" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../static/css/style_RADS.css?version=52">
+  <script type="text/javascript" src="../static/js/animation.js"></script>
+</head>
+    <body>
+
+        {# Banner over the page #}
+      <div id="banner">
+        <div class="content">
+          <h1>Educational Finances to Inform Investment</h1>
+        </div>
+      </div>
+
+        <button class="tablink" onclick="openPage('Home', this, '#878787')" id="defaultOpen">Home</button>
+        <button class="tablink" onclick="openPage('Insert', this, '#878787')">Insert</button>
+        <button class="tablink" onclick="openPage('Update', this,'#878787')">Update</button>
+        <button class="tablink" onclick="openPage('Delete', this, '#878787')">Delete</button>
+
+        <div id="Home" class="column middle tabcontent">
+            <form method="POST">
+                Search for company records by ticker:<br>
+                <input type="text" name="tag" placeholder="Search..."><br>
+                <input type="submit" name="btn" value="SH">
+            </form>
+
+            <h2>{{ company }}</h2>
+              <table id="customers">
+                  <tr>
+                      <th>Ticker</th>
+                      <th>Date</th>
+                      <th>Open</th>
+                      <th>High</th>
+                      <th>Low</th>
+                      <th>Close</th>
+                      <th>Adj Close</th>
+                      <th>Volume</th>
+                  </tr>
+                  <tr>
+                      <td>{{ ticker }}</td>
+                      <td>{{ date }}</td>
+                      <td>{{ records[0] }}</td>
+                      <td>{{ records[1] }}</td>
+                      <td>{{ records[2] }}</td>
+                      <td>{{ records[3] }}</td>
+                      <td>{{ records[4] }}</td>
+                      <td>{{ records[5] }}</td>
+                  </tr>
+
+                </table>
+            </div>
+
+        <div id="Insert" class="tabcontent">
+         <form method="POST">
+               Insert ticker and security name<br>
+                <input type="text" name="insert_tick" placeholder="Ticker..."><br>
+                <input type="text" name="insert_secu" placeholder="Security name..."><br>
+                <input type="submit" name="btn" value="SI">
+            </form>
+        </div>
+
+        <div id="Update" class="tabcontent">
+            <form method="POST">
+          Update a company ticker:<br>
+            <input type="text" name="ntick" placeholder="New ticker..."><br>
+            <input type="text" name="nsecu" placeholder="New security name..."><br>
+            <input type="text" name="otick" placeholder="Old ticker..."><br>
+            <input type="submit" name="btn" value="SU">
+            </form>
+        </div>
+
+        <div id="Delete" class="tabcontent">
+            <form method="POST">
+          Remove company records by ticker:<br>
+                <input type="text" name="del" placeholder="Search..."><br>
+                <input type="submit" name="btn" value="SD">
+            </form>
+        </div>
+      <div>
+{#        <!-- Use a button to open the snackbar -->#}
+{#        <button onclick="snackbar_animate()">Show Snackbar</button>#}
+
+        <!-- The actual snackbar -->
+        <div id="snackbar">Some text some message..</div>
+
+        </div>
+
+    </body>
+</html>

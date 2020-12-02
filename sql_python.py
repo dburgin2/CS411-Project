@@ -57,6 +57,20 @@ def insert_security(ticker, security_name):
 	else:
 		print("Process failed. Not a valid symbol.")
 		return False
+def insert_stocks(symbol, date, open, high, low, close, adj_close, volume):
+   db = mysql.connector.connect(
+         host="localhost",
+         user="root",
+         passwd="CS411RADS",
+         database="Financial_Database"
+      )
+   mycursor = db.cursor()
+   query = "INSERT INTO Stocks (Symbol, Date_Recorded, Open, High, Low, Close, Adj_Close, Volume) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+   val = (symbol, date, open, high, low, close, adj_close, volume)
+   print(query)
+   print(val)
+   mycursor.execute(query, val)
+   db.commit()
 
 #This function deletes a ticker (a Symbol from the Symbols table) completely. This will cascade to Stocks, so all the company records in Stocks will be deleted.
 def delete_security(ticker):
@@ -158,3 +172,75 @@ def top_ten_price():
 	for x in mycursor:
 		top_ten_list.append(list(x))
 	return top_ten_list
+
+def select_active_stocks():
+	db = mysql.connector.connect(
+		host="localhost",
+		user="root",
+		passwd="CS411RADS",
+		database="Financial_Database"
+	)
+	mycursor = db.cursor()
+	mycursor.execute(
+		"SELECT * FROM Active_Stocks")
+
+	list_stocks = []
+	for x in mycursor:
+		list_stocks.append(list(x))
+	return list_stocks
+
+def second_complex_query():
+   db = mysql.connector.connect(
+               host="localhost",
+               user="root",
+               passwd="CS411RADS",
+               database="Financial_Database"
+            )
+   mycursor = db.cursor()
+   query = """SELECT Symbol, MAX(Volume) as MaxVolume FROM Stocks GROUP BY Symbol
+         UNION
+         SELECT Symbol, MIN(Volume) AS Volume
+         FROM Stocks
+         GROUP BY Symbol
+         ORDER BY MaxVolume DESC
+         LIMIT 10"""
+   mycursor.execute(query)
+   return_arr = []
+   for x in mycursor:
+      return_arr.append(list(x))
+   if len(return_arr) == 0:
+      return False
+   return True, return_arr
+
+
+def GetUserStocks(input_price, input_sector, input_volatility):
+   db = mysql.connector.connect(
+                  host="localhost",
+                  user="root",
+                  passwd="CS411RADS",
+                  database="Financial_Database"
+               )
+   mycursor = db.cursor()
+   mycursor.callproc('GetUserStocks', (input_price, input_sector, input_volatility))
+   return_arr = []
+   for result in mycursor.stored_results():
+      return_arr.append(result.fetchall())
+   if len(return_arr[0]) == 0:
+      return False
+   return return_arr[0]
+
+def GetGOOGLPrediction(input_date):
+   db = mysql.connector.connect(
+      host="localhost",
+      user="root",
+      passwd="CS411RADS",
+      database="Financial_Database"
+   )
+   mycursor = db.cursor()
+   mycursor.callproc('GetGOOGLPrediction', (input_date,))
+   return_arr = []
+   for result in mycursor.stored_results():
+      return_arr.append(result.fetchall())
+   if len(return_arr[0]) == 0:
+      return False
+   return list(return_arr[0][0])

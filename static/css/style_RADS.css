@@ -71,6 +71,17 @@ p {
   padding: 10px 20px;
 }
 
+caption {
+  /*border: 1px dotted red;*/
+  color: darkcyan;
+  font-size: 20px;
+  line-height: 48px;
+  padding: auto;
+  margin: auto;
+  text-align: center;
+  border-radius: 15;
+}
+
 .column {
   margin: auto;
   /*border: 3px solid lightcyan;*/
@@ -86,10 +97,80 @@ p {
   width: 50%;
 }
 
+.tab_container{
+    /*width:2000px;*/
+    display:inline-block;
+    margin-left: 100px;
+    float: left;
+}
+
+#tablehead {
+  float: left;
+}
+#activestocks {
+ font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  border-collapse: collapse;
+  width: 30%;
+  float: left;
+  padding: 50px;
+  margin: auto;
+
+}
+
+#activestocks td, #activestocks th {
+  border: 1px solid #dddddd;
+  padding: 8px;
+}
+
+#activestocks tr:nth-child(even){background-color: #f2f2f2;}
+
+
+#topten {
+ font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  border-collapse: collapse;
+  width: 40%;
+  float: left;
+  padding: 100px;
+  margin: auto;
+
+}
+
+#topten td, #topten th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#topten tr:nth-child(even){background-color: #f2f2f2;}
+
+
+#vol {
+ font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  border-collapse: collapse;
+  width: 40%;
+  float: right;
+  padding: 100px;
+  margin: auto;
+
+}
+
+#vol td, #vol th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#vol tr:nth-child(even){background-color: #f2f2f2;}
+
+#form {
+  width: 25%;
+}
 #customers {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  float: right;
 }
 
 #customers td, #customers th {
@@ -306,7 +387,7 @@ p {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 25%;
+  width: 20%;
 }
 
 .tablink:hover {

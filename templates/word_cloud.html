@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RADS - CS411 Final Project</title>
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Raleway:100,200,600,700" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../static/css/style_RADS.css?version=52">
+  <script type="text/javascript" src="../static/js/animation.js"></script><script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js">
+  </script>
+</head>
+    <body>
+
+        {# Banner over the page #}
+      <div id="banner">
+        <div class="content">
+          <h1>Educational Finances to Inform Investment</h1>
+        </div>
+      </div>
+
+        <button class="tablink" onclick="openPage('Home', this, '#878787')" id="defaultOpen">Home</button>
+        <button class="tablink" onclick="openPage('Prediction', this, '#878787')">Prediction</button>
+        <button class="tablink" onclick="openPage('Stocks', this, '#878787')">Stocks for You</button>
+        <button class="tablink" onclick="openPage('Insert', this, '#878787')">Insert</button>
+        <button class="tablink" onclick="openPage('Update', this,'#878787')">Update</button>
+        <button class="tablink" onclick="openPage('Delete', this, '#878787')">Delete</button>
+
+
+{#                          THE HOME TAB                        #}
+        <div id="Home" class="column middle tabcontent active">
+            <form method="POST">
+                Search for company records by ticker:<br>
+                <input type="text" name="tag" placeholder="Search..."><br>
+                <input type="submit" name="btn" value="SH">
+            </form>
+{#            Table where stock data is displayed when it is searched for           #}
+            <h2>{{ company }}</h2>
+              <table id="customers">
+                  <tr>
+                      <th>Ticker</th>
+                      <th>Date</th>
+                      <th>Open</th>
+                      <th>High</th>
+                      <th>Low</th>
+                      <th>Close</th>
+                      <th>Adj Close</th>
+                      <th>Volume</th>
+                  </tr>
+                  <tr>
+                      <td>{{ ticker }}</td>
+                      <td>{{ date }}</td>
+                      <td>{{ records[0] }}</td>
+                      <td>{{ records[1] }}</td>
+                      <td>{{ records[2] }}</td>
+                      <td>{{ records[3] }}</td>
+                      <td>{{ records[4] }}</td>
+                      <td>{{ records[5] }}</td>
+                  </tr>
+
+                </table>
+            </div>
+
+{#        The Prediction Tab            #}
+        <div id="Prediction" class="tabcontent">
+            <div>
+            <div class="tab_container">
+                <form method="POST" id="form">
+              Generate word cloud:<br>
+                    <input type="text" name="gen_word_cloud" placeholder="Search..."><br>
+                    <input type="submit" name="btn" value="Generate Word Cloud">
+                </form>
+
+                <form method="POST" id="form">
+              Find prediction for a certain date:<br>
+                    <input type="text" name="date" placeholder="yyyy-mm-dd..."><br>
+                    <input type="submit" name="btn" value="Predict the future">
+                </form>
+
+            </div>
+
+            <div class="tab_container">
+                  <table id="activestocks" >
+                    <tr>
+                        <th>Active Stocks</th>
+                    </tr>
+
+                  <tr>
+                      <td>{{ activeStock[0][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[1][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[2][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[3][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[4][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[5][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[6][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[7][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[8][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[9][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[10][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[11][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[12][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[13][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[14][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[15][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[16][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[17][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[18][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[19][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[20][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[21][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[22][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[23][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[24][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[25][0] }}</td>
+                  </tr>
+                  <tr>
+                      <td>{{ activeStock[26][0] }}</td>
+                  </tr>
+<tr>
+                      <td>{{ activeStock[27][0] }}</td>
+                  </tr>
+<tr>
+                      <td>{{ activeStock[28][0] }}</td>
+                  </tr>
+<tr>
+                      <td>{{ activeStock[29][0] }}</td>
+                  </tr>
+<tr>
+                      <td>{{ activeStock[30][0] }}</td>
+                  </tr>
+
+
+
+              </table>
+
+
+                    <table id="topten">
+                        <tr>
+                            <th colspan="2">Top Ten Prices</th>
+                        </tr>
+                        <tr>
+                            <th>Ticker</th>
+                            <th>Security Name</th>
+                        </tr>
+                       <tr>
+                           <td>{{ topten[0][0] }}</td>
+                           <td>{{ topten[0][1] }}</td>
+                        </tr>
+                        <tr>
+                           <td>{{ topten[1][0] }}</td>
+                           <td>{{ topten[1][1] }}</td>
+                        </tr>
+                        <tr>
+                           <td>{{ topten[2][0] }}</td>
+                           <td>{{ topten[2][1] }}</td>
+                        </tr>
+                        <tr>
+                           <td>{{ topten[3][0] }}</td>
+                           <td>{{ topten[3][1] }}</td>
+                        </tr>
+                        <tr>
+                           <td>{{ topten[4][0] }}</td>
+                           <td>{{ topten[4][1] }}</td>
+                        </tr>
+                        <tr>
+                           <td>{{ topten[5][0] }}</td>
+                           <td>{{ topten[5][1] }}</td>
+                        </tr>
+                        <tr>
+                           <td>{{ topten[6][0] }}</td>
+                           <td>{{ topten[6][1] }}</td>
+                        </tr>
+                        <tr>
+                           <td>{{ topten[7][0] }}</td>
+                           <td>{{ topten[7][1] }}</td>
+                        </tr>
+                        <tr>
+                           <td>{{ topten[8][0] }}</td>
+                           <td>{{ topten[8][1] }}</td>
+                        </tr>
+                        <tr>
+                           <td>{{ topten[9][0] }}</td>
+                           <td>{{ topten[9][1] }}</td>
+                        </tr>
+                    </table>
+
+                    <table id="vol">
+                       <tr>
+                            <th colspan="3">Max and Min Volumes of Stocks</th>
+                        </tr>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Max Volume</th>
+                            <th>Min Volume</th>
+                        </tr>
+
+                        <tr>
+                            <td>{{ volstock[1][0][0] }}</td>
+                           <td>{{ volstock[1][0][1] }}</td>
+                           <td>{{ volstock[1][1][1] }}</td>
+                        </tr>
+                        <tr>
+                           <td>{{ volstock[1][2][0] }}</td>
+                            <td>{{ volstock[1][2][1] }}</td>
+                            <td>{{ volstock[1][3][1] }}</td>
+                        </tr>
+                        <tr>
+                           <td>{{ volstock[1][4][0] }}</td>
+                           <td>{{ volstock[1][4][1] }}</td>
+                            <td>{{ volstock[1][5][1] }}</td>
+                        </tr>
+                        <tr>
+                           <td>{{ volstock[1][6][0] }}</td>
+                           <td>{{ volstock[1][6][1] }}</td>
+                            <td>{{ volstock[1][7][1] }}</td>
+                        </tr>
+                        <tr>
+                           <td>{{ volstock[1][8][0] }}</td>
+                           <td>{{ volstock[1][8][1] }}</td>
+                            <td>{{ volstock[1][9][1] }}</td>
+                        </tr>
+
+                    </table>
+
+                <table id="vol">
+                       <tr>
+                            <th colspan="2">Predicted Stock Price</th>
+                        </tr>
+                        <tr>
+                            <th>Date</th>
+                            <th>Stock Price</th>
+                        </tr>
+
+                        <tr>
+                            <td>{{ date }}</td>
+                           <td>{{ price }}</td>
+                        </tr>
+
+
+                    </table>
+            </div>
+{#           <figure class="tab_container" id="activestocks">#}
+            <div class="tab_container">
+                <img src="static/wordcloud.png" alt="wordCloudRendered" style="width:100%">
+            </div>
+
+            <div class="tab_container">
+                <img src="static/tickerPie.png" alt="tickerPie" style="width:100%">
+            </div>
+
+            <div class="tab_container">
+                <img src="static/googleTimeAnalysis.png" alt="TimeAnalysis" style="width:100%">
+            </div>
+{#               <img src={{ file_name }} alt="wordCloudRendered" style="width:100%">#}
+{#           </figure>#}
+        </div>
+        </div>
+
+        <div id="Stocks" class="tabcontent">
+            <form method="POST">
+          Find stocks within your price range, interests, and desired volatility:<br>
+                <input type="text" name="pr" placeholder="Input price..."><br>
+                <input type="text" name="se" placeholder="Sector..."><br>
+                <input type="text" name="vo" placeholder="Volatility..."><br>
+                <input type="submit" name="btn" value="Find matches">
+            </form>
+
+
+        </div>
+
+{#        The Insert tab        #}
+        <div id="Insert" class="tabcontent">
+         <form method="POST">
+               Insert ticker and security name<br>
+                <input type="text" name="insert_tick" placeholder="Ticker..."><br>
+                <input type="text" name="insert_secu" placeholder="Security name..."><br>
+                <input type="submit" name="btn" value="SI">
+            </form>
+
+            <form method="POST">
+               Insert stocks<br>
+                <input type="text" name="in_symbol" placeholder="Ticker..."><br>
+                <input type="text" name="in_date" placeholder="Date recorded..."><br>
+                <input type="text" name="in_open" placeholder="Open..."><br>
+                <input type="text" name="in_high" placeholder="High..."><br>
+                <input type="text" name="in_low" placeholder="Low..."><br>
+                <input type="text" name="in_close" placeholder="Close..."><br>
+                <input type="text" name="in_adj_close" placeholder="Adj_Close..."><br>
+                <input type="text" name="in_vol" placeholder="Volume..."><br>
+                <input type="submit" name="btn" value="Insert Stocks">
+            </form>
+        </div>
+
+        <div id="Update" class="tabcontent">
+            <form method="POST">
+          Update a company ticker:<br>
+            <input type="text" name="ntick" placeholder="New ticker..."><br>
+            <input type="text" name="nsecu" placeholder="New security name..."><br>
+            <input type="text" name="otick" placeholder="Old ticker..."><br>
+            <input type="submit" name="btn" value="SU">
+            </form>
+        </div>
+
+        <div id="Delete" class="tabcontent">
+            <form method="POST">
+          Remove company records by ticker:<br>
+                <input type="text" name="del" placeholder="Search..."><br>
+                <input type="submit" name="btn" value="SD">
+            </form>
+        </div>
+      <div>
+
+
+
+{#        <!-- Use a button to open the snackbar -->#}
+{#        <button onclick="snackbar_animate()">Show Snackbar</button>#}
+
+        <!-- The actual snackbar -->
+        <div id="snackbar">Some text some message..</div>
+
+        </div>
+
+    </body>
+</html>

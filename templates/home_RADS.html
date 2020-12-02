@@ -4,7 +4,9 @@
   <title>RADS - CS411 Final Project</title>
   <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Raleway:100,200,600,700" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="../static/css/style_RADS.css?version=52">
-  <script type="text/javascript" src="../static/js/animation.js"></script>
+  <script type="text/javascript" src="../static/js/animation.js"></script><script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js">
+  </script>
 </head>
     <body>
 
@@ -16,17 +18,21 @@
       </div>
 
         <button class="tablink" onclick="openPage('Home', this, '#878787')" id="defaultOpen">Home</button>
+        <button class="tablink" onclick="openPage('Prediction', this, '#878787')">Prediction</button>
+        <button class="tablink" onclick="openPage('Stocks', this, '#878787')">Stocks for You</button>
         <button class="tablink" onclick="openPage('Insert', this, '#878787')">Insert</button>
         <button class="tablink" onclick="openPage('Update', this,'#878787')">Update</button>
         <button class="tablink" onclick="openPage('Delete', this, '#878787')">Delete</button>
 
-        <div id="Home" class="column middle tabcontent">
+
+{#                          THE HOME TAB                        #}
+        <div id="Home" class="column middle tabcontent active">
             <form method="POST">
                 Search for company records by ticker:<br>
                 <input type="text" name="tag" placeholder="Search..."><br>
                 <input type="submit" name="btn" value="SH">
             </form>
-
+{#            Table where stock data is displayed when it is searched for           #}
             <h2>{{ company }}</h2>
               <table id="customers">
                   <tr>
@@ -51,8 +57,95 @@
                   </tr>
 
                 </table>
+
+
             </div>
 
+{#        The Prediction Tab            #}
+        <div id="Prediction" class="tabcontent">
+            <form method="POST">
+          Generate word cloud:<br>
+                <input type="text" name="gen_word_cloud" placeholder="Search..."><br>
+                <input type="submit" name="btn" value="Generate Word Cloud">
+            </form>
+        </div>
+      <div>
+
+       <div id="Stocks" class="tabcontent">
+            <form method="POST">
+          Find stocks within your price range, interests, and desired volatility:<br>
+                <input type="text" name="pr" placeholder="Input price..."><br>
+                <input type="text" name="se" placeholder="Sector..."><br>
+                <input type="text" name="vo" placeholder="Volatility..."><br>
+                <input type="submit" name="btn" value="Find matches">
+            </form>
+
+           <table id="customers">
+
+                <tr>
+                   <th colspan="3">Best Options</th>
+                </tr>
+                  <tr>
+                      <th>Price</th>
+                      <th>Sector</th>
+                      <th>Volatility</th>
+                  </tr>
+                  <tr>
+                      <td>{{ suggest[0][0] }}</td>
+                      <td>{{ suggest[0][1] }}</td>
+                      <td>{{ suggest[0][2] }}</td>
+                  </tr>
+
+                <tr>
+                      <td>{{ suggest[1][0] }}</td>
+                      <td>{{ suggest[1][1] }}</td>
+                      <td>{{ suggest[1][2] }}</td>
+                  </tr>
+
+                <tr>
+                      <td>{{ suggest[2][0] }}</td>
+                      <td>{{ suggest[2][1] }}</td>
+                      <td>{{ suggest[2][2] }}</td>
+                  </tr>
+                <tr>
+                      <td>{{ suggest[3][0] }}</td>
+                      <td>{{ suggest[3][1] }}</td>
+                      <td>{{ suggest[3][2] }}</td>
+                  </tr>
+                <tr>
+                      <td>{{ suggest[4][0] }}</td>
+                      <td>{{ suggest[4][1] }}</td>
+                      <td>{{ suggest[4][2] }}</td>
+                  </tr>
+                <tr>
+                      <td>{{ suggest[5][0] }}</td>
+                      <td>{{ suggest[5][1] }}</td>
+                      <td>{{ suggest[5][2] }}</td>
+                  </tr>
+                <tr>
+                      <td>{{ suggest[6][0] }}</td>
+                      <td>{{ suggest[6][1] }}</td>
+                      <td>{{ suggest[6][2] }}</td>
+                  </tr>
+                <tr>
+                      <td>{{ suggest[7][0] }}</td>
+                      <td>{{ suggest[7][1] }}</td>
+                      <td>{{ suggest[7][2] }}</td>
+                  </tr>
+                <tr>
+                      <td>{{ suggest[8][0] }}</td>
+                      <td>{{ suggest[8][1] }}</td>
+                      <td>{{ suggest[8][2] }}</td>
+                  </tr>
+                <tr>
+                      <td>{{ suggest[9][0] }}</td>
+                      <td>{{ suggest[9][1] }}</td>
+                      <td>{{ suggest[9][2] }}</td>
+                  </tr>
+                </table>
+        </div>
+
+{#        The Insert tab        #}
         <div id="Insert" class="tabcontent">
          <form method="POST">
                Insert ticker and security name<br>
@@ -60,6 +153,20 @@
                 <input type="text" name="insert_secu" placeholder="Security name..."><br>
                 <input type="submit" name="btn" value="SI">
             </form>
+
+        <form method="POST">
+               Insert stocks<br>
+                <input type="text" name="in_symbol" placeholder="Ticker..."><br>
+                <input type="text" name="in_date" placeholder="Date recorded..."><br>
+                <input type="text" name="in_open" placeholder="Open..."><br>
+                <input type="text" name="in_high" placeholder="High..."><br>
+                <input type="text" name="in_low" placeholder="Low..."><br>
+                <input type="text" name="in_close" placeholder="Close..."><br>
+                <input type="text" name="in_adj_close" placeholder="Adj_Close..."><br>
+                <input type="text" name="in_vol" placeholder="Volume..."><br>
+                <input type="submit" name="btn" value="Insert Into Stocks">
+            </form>
+
         </div>
 
         <div id="Update" class="tabcontent">
@@ -80,6 +187,9 @@
             </form>
         </div>
       <div>
+
+
+
 {#        <!-- Use a button to open the snackbar -->#}
 {#        <button onclick="snackbar_animate()">Show Snackbar</button>#}
 
